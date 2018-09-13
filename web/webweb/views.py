@@ -3,6 +3,9 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.contrib.auth import logout,authenticate, login
 from django.contrib.auth.models import User
+import redis
+import redis_lock
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
 
 # Create your views here.
@@ -37,3 +40,11 @@ def user_register(request):
     user = authenticate(request, username=username, password=password)
     login(request, user)
     return index(request)
+    
+    
+def my_image(request):
+    print('img!')
+    img = None
+    with redis_lock.Lock(r, "image"):
+        img = r.get('image')
+    return HttpResponse(img, content_type="image/jpg")

@@ -1,6 +1,7 @@
 from FrameProvider import *
 from FrameProcessor import *
 import redis
+import redis_lock
 
 if __name__ == '__main__':
     # you will need a frame provider and a processor
@@ -25,4 +26,5 @@ if __name__ == '__main__':
     # press q to exit
     while True:
         img = cv2.imencode('.jpg', frame_processor.process(frame_provider.next_frame()))[1]
-        r.set('image', img)
+        with redis_lock.Lock(r, "image"):
+            r.set('image', img.tobytes())

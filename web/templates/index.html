@@ -52,20 +52,32 @@
       {% if not logged_in %}
             <div> <p style="color: red"> 您无权查看监控 </p> </div>
       {% else %}
-        <img src="https://docs.python.org/2/_static/py.png">
+        <img src="main.jpg" id="main_image">
       {% endif %}
   </div>
 
 
 </body>
 <script type="text/javascript">
-    document.getElementById("admin").onclick = function () {
+    admin = document.getElementById("admin");
+    if(admin)
+    {
+    admin.onclick = function () {
         location.href = "admin";
     };
+    }
 
     function logout() {
         location.href = "logout";
     }
+    
+    setInterval(function(){ 
+    img = document.getElementById("main_image");
+    if(img)
+    {
+    img.src = 'main.jpg?' + new Date().getTime();;
+    }
+    }, 50);
 
 </script>
 </html>

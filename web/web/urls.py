@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from webweb.views import index, user_logout, user_login, user_register
+from webweb.views import index, user_logout, user_login, user_register, my_image
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^logout$', user_logout),
     url(r'^login$', user_login),
     url(r'^register$', user_register),
+    url(r'jpg', my_image),
 ]
