@@ -1,5 +1,6 @@
 from FrameProvider import *
 from FrameProcessor import *
+import redis
 
 if __name__ == '__main__':
     # you will need a frame provider and a processor
@@ -19,9 +20,9 @@ if __name__ == '__main__':
     # processor = ObjectTrackerFrameProcessor('net/ObjectTracker.proto', 'net/ObjectTracker.caffemodel')
     frame_processor = MobileNetSsdObjectDetectionFrameProcessor('net/MobileNetSsd.proto', 'net/MobileNetSsd.caffemodel')
 
+    r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
     # press q to exit
     while True:
-        cv2.imshow('Monitor', frame_processor.process(frame_provider.next_frame()))
-        key = cv2.waitKey(1) & 0xFF
-        if key == ord('q'):
-            break
+        img = cv2.imencode('.jpg', frame_processor.process(frame_provider.next_frame()))[1]
+        r.set('image', img)
