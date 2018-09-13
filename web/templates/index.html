@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>今日头条</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div>
+      {% if not logged_in %}
+            <ul class="nav nav-pills">
+              <li class="active"><a data-toggle="pill" href="#login">login</a></li>
+              <li><a data-toggle="pill" href="#register">registration</a></li>
+              <li><a data-toggle="pill" href="#admin">admin login</a></li>
+            </ul>
+
+            <div class="tab-content">
+              <div id="login" class="tab-pane fade in active">
+                    <form action="login" method="post">
+                        <div><input type="text" name="username"> <p>用户名</p></div>
+                        <div><input type="password" name="password"> <p>密码</p></div>
+                        <input type="submit" value="登录">
+                    </form>
+              </div>
+              <div id="register" class="tab-pane fade">
+                    <form action="register" method="post">
+                        <div><input type="text" name="username"> <p>用户名</p></div>
+                        <div><input type="password" name="password"> <p>密码</p></div>
+                        <input type="submit" value="注册">
+                    </form>
+              </div>
+              <div id="admin" class="tab-pane fade">
+                <button>管理员登录</button>
+              </div>
+            </div>
+      {% else %}
+        <div>欢迎! <button onclick="logout()">退出登录</button></div>
+      {% endif %}
+</div>
+
+      {% if error %}
+            <div> <p style="color: red"> {{ error }} </p> </div>
+      {% else %}
+
+      {% endif %}
+
+  <div>
+      {% if not logged_in %}
+            <div> <p style="color: red"> 您无权查看监控 </p> </div>
+      {% else %}
+        <img src="https://docs.python.org/2/_static/py.png">
+      {% endif %}
+  </div>
+
+
+</body>
+<script type="text/javascript">
+    document.getElementById("admin").onclick = function () {
+        location.href = "admin";
+    };
+
+    function logout() {
+        location.href = "logout";
+    }
+
+</script>
+</html>
