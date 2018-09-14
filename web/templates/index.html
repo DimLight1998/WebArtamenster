@@ -13,24 +13,25 @@
 <div>
       {% if not logged_in %}
             <ul class="nav nav-pills">
-              <li class="active"><a data-toggle="pill" href="#login">login</a></li>
-              <li><a data-toggle="pill" href="#register">registration</a></li>
-              <li><a data-toggle="pill" href="#admin">admin login</a></li>
+              <li class="active" onclick="clearError()"><a data-toggle="pill" href="#login">登录</a></li>
+              <li onclick="clearError()"><a data-toggle="pill" href="#reset">重置密码</a></li>
+              <li onclick="clearError()"><a data-toggle="pill" href="#admin">管理员登录</a></li>
             </ul>
 
             <div class="tab-content">
               <div id="login" class="tab-pane fade in active">
                     <form action="login" method="post">
-                        <div><input type="text" name="username"> <p>用户名</p></div>
-                        <div><input type="password" name="password"> <p>密码</p></div>
+                        <div>用户名: <input type="text" name="username"> </div>
+                        <div>密码: <input type="password" name="password"> </div>
                         <input type="submit" value="登录">
                     </form>
               </div>
-              <div id="register" class="tab-pane fade">
-                    <form action="register" method="post">
-                        <div><input type="text" name="username"> <p>用户名</p></div>
-                        <div><input type="password" name="password"> <p>密码</p></div>
-                        <input type="submit" value="注册">
+              <div id="reset" class="tab-pane fade">
+                    <form action="reset" method="post">
+                        <div>用户名: <input type="text" name="username"> </div>
+                        <div>旧密码: <input type="password" name="old"> </div>
+                        <div>新密码: <input type="password" name="new"> </div>
+                        <input type="submit" value="重置">
                     </form>
               </div>
               <div id="admin" class="tab-pane fade">
@@ -43,7 +44,7 @@
 </div>
 
       {% if error %}
-            <div> <p style="color: red"> {{ error }} </p> </div>
+            <div> <p id="error" style="color: red"> {{ error }} </p> </div>
       {% else %}
 
       {% endif %}
@@ -69,6 +70,14 @@
 
     function logout() {
         location.href = "logout";
+    }
+    
+    function clearError() {
+        error = document.getElementById("error");
+        if(error)
+        {
+        error.hidden = true;
+        }
     }
     
     setInterval(function(){ 

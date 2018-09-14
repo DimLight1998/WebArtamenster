@@ -12,13 +12,14 @@ with redis_lock.Lock(r, "image"):
 
 
 # Create your views here.
-def index(request, error=''):
-    return render_to_response("index.html", {'logged_in': request.user.is_authenticated, 'error':error})
+def index(request):
+    return render_to_response("index.html", {'logged_in': request.user.is_authenticated, 'error':"" if 'error' not in request.session else request.session['error']})
 
 
 def user_logout(request):
     logout(request)
-    return index(request)
+    request.session['error'] = ""
+    return HttpResponseRedirect("/")
 
 
 def user_login(request):
@@ -30,7 +31,8 @@ def user_login(request):
         login(request, user)
     else:
         error = '用户名/密码错误'
-    return index(request, error=error)
+    request.session['error'] = error
+    return HttpResponseRedirect("/")
 
 
 def user_register(request):
@@ -38,11 +40,32 @@ def user_register(request):
     password = request.POST['password']
     ans = User.objects.filter(username=username)
     if len(ans):
-        return index(request, error="用户已存在")
+        error = "用户已存在"
+        request.session['error'] = error
+        return HttpResponseRedirect("/")
     user = User.objects.create_user(username, email=None, password=password)
     user = authenticate(request, username=username, password=password)
     login(request, user)
-    return index(request)
+    request.session['error'] = error
+    return HttpResponseRedirect("/")
+    
+    
+def user_reset(request):
+    username = request.POST['username']
+    old = request.POST['old']
+    new = request.POST['new']
+    user = authenticate(request, username=username, password=old)
+    error = ''
+    if user is not None:
+        # user.password = new
+        user.set_password(new)
+        user.save()
+        error = "修改成功"
+    else:
+        error = '用户名/密码错误'
+    request.session['error'] = error
+    return HttpResponseRedirect("/")
+    
     
     
 def my_image(request):
