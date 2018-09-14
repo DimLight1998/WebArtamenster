@@ -13,7 +13,10 @@ with redis_lock.Lock(r, "image"):
 
 # Create your views here.
 def index(request):
-    return render_to_response("index.html", {'logged_in': request.user.is_authenticated, 'error':"" if 'error' not in request.session else request.session['error']})
+    error = "" if 'error' not in request.session else request.session['error']
+    if 'error' in request.session:
+        del request.session['error']
+    return render_to_response("index.html", {'logged_in': request.user.is_authenticated, 'error':error})
 
 
 def user_logout(request):
