@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 import redis
 import redis_lock
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
+# the first image fetch is slow, so we put it here
+with redis_lock.Lock(r, "image"):
+    img = r.get('image')
 
 
 # Create your views here.
