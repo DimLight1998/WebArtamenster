@@ -1,0 +1,8 @@
+tensorflow
+scipy
+opencv-python
+pillow
+imutils 
+django
+redis
+python-redis-lock
