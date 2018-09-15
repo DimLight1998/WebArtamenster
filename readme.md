@@ -18,6 +18,10 @@
 
 为了保证到时候可以方便地移除这些安装的模块，可以考虑使用 virtualenv。下面的演示基于使用了 virtualenv。
 
+![instruct-2](extra/Static/instruct-2.gif)
+
+![instruct-3](extra/Static/instruct-3.gif)
+
 ### 开启摄像头
 
 摄像头所在的文件是 Camera.py，在开启的情况下需要填入三个参数：摄像头提供图片的模式、摄像头来源以及处理方式。
