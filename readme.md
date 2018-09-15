@@ -51,7 +51,21 @@ python Camera.py newest local ssd_obj
 
 登录后，你应该可以看到正在显示的视频以及与之相关的分析。
 
-## 实现概览
+![instruct-4](extra/Static/instruct-4.gif)
+
+## 实现完成情况概览
+
+- 部署方式以及运行截图见上，附其它模式的运行截图：
+  - 相对运动检测（`rel_motion`）：![rel_motion](extra/Static/instruct-6.gif)
+  - 绝对运动检测（`abs_motion`）：![abs_motion](extra/Static/instruct-7.gif)
+  - Darknet（`darknet`，运行较慢）：![darknet](extra/Static/instruct-8.gif)
+  - 物体追踪（`obj_tracker`，以 id 方式标记出记录的独特对象，貌似只能针对人脸）：![obj_tracker](extra/Static/instruct-5.gif)
+- 第三方库见文档末尾；
+- 网站使用 Django，用户通过重置密码对密码进行修改，管理员登录后通过 Django 自带的管理界面进行用户的管理；
+- Python 读取摄像头支持 RTSP；
+- 网页端显示监控通过刷新 img 实现；因为处理和服务器跑的是两个不同的程序（自然也在不同进程中），使用 Redis 进行数据沟通，所以没法简单地做出推送视频流的方式；
+- 运动物体检测未使用深度学习技术，是普通的计算机视觉技术。物体打标和检测属于深度学习技术。
+- 分析任务完成了初级版（`ssd_obj`），中级版（`rel_motion`）和高级版（`obj_tracker`）。
 
 ## 使用的第三方库
 

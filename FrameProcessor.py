@@ -114,7 +114,7 @@ class DarknetObjectDetectionFrameProcessor(FrameProcessor):
         :param threshold: Threshold of recognition.
         """
         self.tf_net = TFNet({
-            'model': model, 'load': weights, 'threshold': threshold, 'gpu': gpu_limit
+            'model': model, 'load': weights, 'threshold': threshold, 'gpu': gpu_limit, 'labels': 'cfg/coco.names'
         })
 
     def process(self, frame):
